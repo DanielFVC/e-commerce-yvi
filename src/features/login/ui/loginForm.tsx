@@ -16,19 +16,19 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white">
-      <div className="w-full max-w-2xl mt-20 px-6 lg:px-0">
+    <div className="w-full">
+      <div className="max-w-[720px] mx-auto -mt-12 px-4 lg:px-0">
 
         {/* Formulario */}
-        <form onSubmit={handleSubmit} className="flex flex-col items-center gap-8">
+        <form onSubmit={handleSubmit} className="flex flex-col items-center gap-7">
           <div className="w-full">
-            <label className="block text-center text-30px font-extrabold uppercase mb-4">
+            <label className="block text-center text-[25px] font-extrabold mb-4">
               USUARIO
             </label>
             <input
               type="email"
               aria-label="usuario"
-              className="mx-auto block w-auto md:w-3/4 lg:w-10px h-7 border-2 border-black px-4 outline-none"
+              className="block w-full h-14 border-4 border-black px-4 outline-none mx-auto"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -36,13 +36,13 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
           </div>
 
           <div className="w-full">
-            <label className="block text-center text-30px font-extrabold uppercase mb-4">
+            <label className="block text-center text-[25px] font-extrabold uppercase mb-4">
               CONTRASEÑA
             </label>
             <input
               type="password"
               aria-label="contraseña"
-              className="mx-auto block w-auto md:w-3/4 lg:w-10px h-7 border-2 border-black px-4 outline-none"
+              className="block w-full h-14 border-4 border-black px-4 outline-none mx-auto"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -51,7 +51,7 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
 
           <button
             type="submit"
-            className="mt-4 bg-black text-white py-2 px-6 font-bold hover:bg-gray-800 transition rounded"
+            className="mt-6 bg-black text-white py-2 px-6 font-bold hover:bg-gray-800 transition rounded"
           >
             Iniciar sesión
           </button>
