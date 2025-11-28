@@ -4,20 +4,24 @@ import { connect } from '@/lib/mongoose';
 
 export async function GET() {
   try {
-    // Ensure DB connection is established before querying
     await connect();
-    const docs = await Product.find({}).limit(100).lean();
-    const products = docs.map((d: any) => ({
-      id: String(d._id),
-      title: d.nombre || d.title || '',
-      brand: d.marca || d.brand || '',
-      price: d.precio ?? d.price ?? 0,
-      image: d.imagen_url || d.image || '',
-      discount: d.discount ?? undefined,
+    
+    const products = await Product.find({}).limit(100).lean();
+    
+    const mappedProducts = products.map((p: any) => ({
+      id: p._id.toString(),
+      title: p.nombre,
+      brand: p.marca,
+      price: p.precio,
+      image: p.imagen_url,
     }));
-    return NextResponse.json(products);
-  } catch (err) {
-    console.error('GET /api/productos error', err);
-    return NextResponse.json({ error: 'Unable to fetch products' }, { status: 500 });
+
+    return NextResponse.json(mappedProducts);
+  } catch (error) {
+    console.error('Error al obtener productos:', error);
+    return NextResponse.json(
+      { error: 'Error al obtener productos' },
+      { status: 500 }
+    );
   }
 }
