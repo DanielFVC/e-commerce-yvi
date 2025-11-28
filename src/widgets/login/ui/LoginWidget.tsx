@@ -4,11 +4,14 @@ import LoginForm from "@/features/login/ui/loginForm";
 import { LoginCredentials } from "@/entities/login/model/login.types";
 import { useState } from "react";
 import { useLogin } from "@/features/login/model/useLogin";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 
 export const LoginWidget = () => {
   const { login, loginState } = useLogin();
+  const router = useRouter();
 
   const handleLogin = async (credentials: LoginCredentials) => {
     console.log("handleLogin called", credentials);
@@ -16,7 +19,10 @@ export const LoginWidget = () => {
       const res = await login(credentials);
       if (res) {
         console.log("Login successful:", res);
-        // redirigir o actualizar UI según respuesta
+        // Redirigir a la página principal después de login exitoso
+        setTimeout(() => {
+          router.push('/pagina-principal');
+        }, 500);
       } else {
         console.warn("Credenciales inválidas");
       }
@@ -27,8 +33,8 @@ export const LoginWidget = () => {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      {/* Banner superior: usa gradiente como placeholder para la imagen del header */}
-      <header className="w-full h-48 md:h-56 lg:h-50 bg-center bg-cover"
+      {/* Banner superior con botón de regreso */}
+      <header className="w-full h-48 md:h-56 lg:h-50 bg-center bg-cover relative"
       style={{ backgroundImage: "url('/fondo-perfumeria.jpg')" }}>
       <div className="w-full h-full flex items-center justify-center">
         <div className="flex items-center gap-1 text-white text-4xl md:text-6xl font-black tracking-wides">
@@ -42,6 +48,12 @@ export const LoginWidget = () => {
           />
         </div>
       </div>
+      {/* Botón de regreso - esquina superior izquierda */}
+      <Link href="/pagina-principal">
+        <button className="absolute top-4 left-6 px-4 py-2 border border-white text-white rounded hover:bg-white hover:text-black transition font-semibold">
+          ← Volver
+        </button>
+      </Link>
     </header>
 
      
@@ -71,7 +83,16 @@ export const LoginWidget = () => {
                 {loginState.isAuthenticated && loginState.user && (
                   <p className="text-sm text-green-600">Bienvenido, {loginState.user.name}</p>
                 )}
-                {/* debug output removed */}
+              </div>
+
+              {/* Link al registro */}
+              <div className="mt-4 text-center">
+                <p className="text-sm text-gray-600">
+                  ¿No tienes cuenta?{' '}
+                  <Link href="/register" className="text-black font-semibold hover:underline">
+                    Regístrate aquí
+                  </Link>
+                </p>
               </div>
             </div>
           </div>
